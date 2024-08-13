@@ -6,6 +6,8 @@ using namespace std;
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+        
+        if (prices.empty()) return 0;
 
         int buy_i = -1;
         int sell_i = -1;
