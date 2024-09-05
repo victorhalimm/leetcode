@@ -1,26 +1,83 @@
 class Solution {
 public:
     vector<int> missingRolls(vector<int>& rolls, int mean, int n) {
-        int totalMissing, total = 0, quantity = n + rolls.size();
-        vector<int> vect;
+        
 
-        for(int roll : rolls) total += roll;
-        totalMissing = (quantity * mean) - total;
+        int diceCount = n + rolls.size();
 
-        int average = totalMissing / n;
-        if(n * 6 < totalMissing || average == 0) return vect;
+        int currentSum = 0;
 
-        while(totalMissing > 0) {
-            average = totalMissing/(n-vect.size());
-            if(totalMissing >= average && vect.size() < n - 1) {
-                vect.push_back(average);
-                totalMissing -= average;
-            } else {
-                vect.push_back(totalMissing);
-                totalMissing -= totalMissing;
-            }
+        for (int roll : rolls) {
+
+            currentSum += roll;
+
         }
 
-        return vect;
+        int remainSum = mean * diceCount - currentSum;
+
+        vector<int> missing;
+
+        if (n * 6 < remainSum || remainSum < 0 || remainSum < n) return {};
+
+        for (int i = 1; i <= 6; i ++) {
+
+            if (remainSum / i > n) {
+                continue;
+            }
+
+            if (i * n == remainSum) {
+
+                for (int j = 0; j < n; j ++) {
+                    missing.push_back(i);
+                }
+
+                break;
+            }
+
+            else {
+                
+                bool status = i * n < remainSum;
+                int extra = status ? remainSum % i : i * n - remainSum;
+
+                for (int j = 0; j < n; j ++) {
+
+                    if (status) {
+                        if (extra > 0 && i + extra <= 6) {
+                            missing.push_back(i + extra);
+                            extra = 0;
+                        }
+
+                        else if (extra > 0) {
+                            int added = 6 - i;
+
+                            missing.push_back(6);
+                            extra -= added;
+                        }
+
+                        else missing.push_back(i);
+                    } else {
+                        if (extra > 0 && i - extra >= 1) {
+                            missing.push_back(i - extra);
+                            extra = 0;
+                        }
+
+                        else if (extra > 0) {
+                            int decreased = i - 1;
+
+                            missing.push_back(1);
+                            extra -= decreased;
+                        }
+
+                        else missing.push_back(i);
+                    }
+                }
+
+                break;
+            }
+
+
+        }
+
+        return missing;
     }
 };
