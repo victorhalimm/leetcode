@@ -48,10 +48,9 @@ public:
             ListNode *next = curr->next;
             curr->next = nullptr;
 
-            res[it] = tempHead;
+            res[it ++] = tempHead;
 
             curr = next;
-            it ++;
         }
 
         return res;
