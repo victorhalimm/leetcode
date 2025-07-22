@@ -6,6 +6,7 @@ class Solution {
         while (i < length) {
             if (gas[i] < cost[i]) {
                 i ++;
+                continue;
             }
 
             int remain = 0;
