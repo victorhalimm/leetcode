@@ -1,27 +1,18 @@
-#include <vector>
-#include <stack>
-
-using namespace std;
-
 class Solution {
 public:
     vector<int> dailyTemperatures(vector<int>& temperatures) {
-        
-        vector<int> res(temperatures.size(), 0);
-
-        stack<int> idx;
+        vector<int> res(temperatures.size());
+        stack<pair<int,int>> stk;
 
         for (int i = 0; i < temperatures.size(); i ++) {
-    
-            while (!idx.empty() && temperatures[idx.top()] < temperatures[i]) {
-                res[idx.top()] = i - idx.top();
-                idx.pop(); 
+            while (!stk.empty() && stk.top().first < temperatures[i]) {
+                res[stk.top().second] = i -  stk.top().second;
+                stk.pop();
             }
 
-            idx.push(i);
+            stk.push({temperatures[i], i});
         }
 
         return res;
-
     }
 };
