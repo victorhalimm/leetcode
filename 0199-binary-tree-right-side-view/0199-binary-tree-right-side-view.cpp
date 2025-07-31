@@ -11,39 +11,37 @@
  */
 class Solution {
 public:
-
-    void bfs(TreeNode *root, vector<int>& res) {
-
-        queue<TreeNode *> q;
-
-        q.push(root);
-
-        while (!q.empty()) {
-
-            int size = q.size();
-
-            for (int i = 0; i < size; i ++) {
-
-                if (i == size - 1) 
-                    res.push_back(q.front()->val);
-                
-                TreeNode *curr = q.front();
-                q.pop();
-
-                if (curr->left) q.push(curr->left);
-                if (curr->right) q.push(curr->right);
-            }
-        }
-
-    }
-
     vector<int> rightSideView(TreeNode* root) {
-        
+        if (!root) return {};
+
+        queue<TreeNode*> q;
         vector<int> res;
 
-        if (root == nullptr) return res;
+        q.push(root);
+        res.push_back(root->val);
 
-        bfs(root, res);
+        while (!q.empty()) {
+            int levelSize = q.size();
+            TreeNode* endMost = NULL;
+
+            for (int i = 0; i < levelSize; i ++) {
+                TreeNode* curr = q.front();
+
+                if (curr->left) {
+                    q.push(curr->left);
+                    endMost = curr->left;
+                }
+
+                if (curr->right) {
+                    q.push(curr->right);
+                    endMost = curr->right;
+                }
+
+                q.pop();
+            }
+
+            if (endMost) res.push_back(endMost->val);
+        }
 
         return res;
     }
