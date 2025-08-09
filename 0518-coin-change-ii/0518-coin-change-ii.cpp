@@ -16,6 +16,12 @@ public:
 
         if (dp[curr][amount] != -1) return dp[curr][amount];
 
-        return dp[curr][amount] = memo(dp, coins, amount - coins[curr], curr) + memo(dp, coins, amount, curr + 1);
+        int take = 0;
+        if (amount >= coins[curr]) 
+            take = memo(dp, coins, amount - coins[curr], curr);
+
+        int skip = memo(dp, coins, amount, curr + 1);
+
+        return dp[curr][amount] = take + skip;
     }
 };
