@@ -16,6 +16,7 @@ public:
 
         for (int i = 0; i < nums.size(); i ++) {
             if (nums[i] == 0 && i < nums.size() - 1) count ++;
+
             else {
                 if (nums[i] == 0) count ++;
                 
@@ -24,9 +25,7 @@ public:
                 if (dp[count - 1] != -1) dp[count] = dp[count - 1] + count;
                 
                 else {
-                    for (int i = 1; i <= count; i ++) {
-                        dp[i] = dp[i - 1] + i;
-                    }
+                    for (int i = 1; i <= count; i ++) dp[i] = dp[i - 1] + i;
                 }
                 res += dp[count];
                 count = 0;
