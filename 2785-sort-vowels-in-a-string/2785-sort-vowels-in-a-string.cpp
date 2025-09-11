@@ -6,18 +6,17 @@ public:
         return false;
     }
     string sortVowels(string s) {
-        vector<char> vowels;
+        priority_queue<char, vector<char>, greater<char>> vowels;
 
         for (char c: s) {
-            if (isVowel(c)) vowels.push_back(c);
+            if (isVowel(c)) vowels.push(c);
         }
-
-        sort(vowels.begin(), vowels.end());
 
         int j = 0;
         for (int i = 0; i < s.size(); i ++) {
             if (isVowel(s[i])) {
-                s[i] = vowels[j ++];
+                s[i] = vowels.top();
+                vowels.pop();
             }
         }
 
