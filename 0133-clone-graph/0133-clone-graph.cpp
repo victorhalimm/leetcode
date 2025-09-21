@@ -28,8 +28,7 @@ public:
         cloneMap[node] = new Node(node->val);
 
         for (Node* neighbor: node->neighbors) {
-            Node* newNeighbor = cloneMap[neighbor] ? cloneMap[neighbor] : dfs(cloneMap, neighbor);
-            cloneMap[node]->neighbors.push_back(newNeighbor);
+            cloneMap[node]->neighbors.push_back(dfs(cloneMap, neighbor));
         }
 
         return cloneMap[node];
