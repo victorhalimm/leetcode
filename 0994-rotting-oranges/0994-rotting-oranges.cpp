@@ -18,6 +18,8 @@ public:
             }
         }
 
+        if (healthy_count == 0) return 0;
+
         int duration = 0;
         while (!rotten_orange_coords.empty()) {
             int curr_oranges = rotten_orange_coords.size();
